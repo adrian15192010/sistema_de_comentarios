@@ -1,0 +1,21 @@
+server:
+  port: 8030
+
+spring:
+  application:
+    name: comentario
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/comentariomicrodb
+    username: root
+    password: V27491173
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  cloud:
+    config:
+      enabled: false
+  Kafka:
+    bootstrap-servers: localhost:9092

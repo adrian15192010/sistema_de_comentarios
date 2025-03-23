@@ -1,0 +1,28 @@
+server:
+  port: 8040
+
+spring:
+  application:
+    name: publicacion
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/publicacionmicrodb
+    username: root
+    password: V27491173
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  cloud:
+    config:
+      enabled: false
+  Kafka:
+    bootstrap-servers: localhost:9092
+
+
+
+
+
+
+
