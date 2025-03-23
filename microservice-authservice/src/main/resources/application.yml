@@ -3,7 +3,7 @@ server:
 
 security:
   jwt:
-    secret-key: 586E3272357538782F413F4428472B4B6250655368566B597033733676397924
+    secret-key:
     expiration: 86400000
     refresh-token:
       expiration: 604800000
@@ -14,8 +14,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/authserviceBlog
-    username: root
-    password: V27491173
+    username:
+    password:
   jpa:
     hibernate:
       ddl-auto: create-drop
