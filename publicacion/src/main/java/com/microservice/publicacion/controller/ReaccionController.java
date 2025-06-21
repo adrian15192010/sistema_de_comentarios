@@ -71,7 +71,7 @@ public class ReaccionController {
 
         Reaccion reaccionSave = reaccionRepository.save(reaccion);
 
-        return ResponseEntity.ok(reaccionSave);
+        return ResponseEntity.ok(reaccionRepository.findByPublicacion(publicacion));
     }
 
 
