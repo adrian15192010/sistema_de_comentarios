@@ -58,7 +58,7 @@ public class ReaccionController {
             if (r.getUserId().equals(auth.getUserId().longValue())){
 
                 reaccionRepository.delete(r);
-                return ResponseEntity.ok("ya has reaccionado, se ha eliminado");
+                return ResponseEntity.ok(reaccionRepository.findByPublicacion(publicacion));
             }
         }
 
