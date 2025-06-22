@@ -1,6 +1,7 @@
 package com.microservice.comentario.dto;
 
 import com.microservice.comentario.entity.Reaccion;
+import com.microservice.comentario.entity.Respuesta;
 import lombok.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ComentarioDto {
 
     private Long publicacionId;
 
-    private Integer sizeRespuesta;
+    private List<Respuesta> respuestaList;
 
     private List<Reaccion> reaccionList;
 
