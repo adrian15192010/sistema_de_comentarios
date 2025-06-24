@@ -3,7 +3,7 @@ server:
 
 security:
   jwt:
-    secret-key:
+    secret-key: 586E3272357538782F413F4428472B4B6250655368566B597033733676397924
     expiration: 86400000
     refresh-token:
       expiration: 604800000
