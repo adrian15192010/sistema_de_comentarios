@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/comentario")
 public class ComentarioController {
@@ -68,7 +69,7 @@ public class ComentarioController {
                         .userId(comentario.getUserId())
                         .username(comentario.getUsername())
                         .publicacionId(comentario.getPublicacionId())
-                        .sizeRespuesta(respuestaRepository.findByComentario(comentario).size())
+                        .respuestaList(respuestaRepository.findByComentario(comentario))
                         .reaccionList(comentario.getReaccionList())
                         .build())
                 .toList());

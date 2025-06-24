@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/reaccion")
 public class ReaccionController {
@@ -57,7 +58,7 @@ public class ReaccionController {
             if (r.getUserId().equals(auth.getUserId().longValue())){
 
                 reaccionRepository.delete(r);
-                return ResponseEntity.ok("ya has reaccionado, se ha eliminado");
+                return ResponseEntity.ok(reaccionRepository.findByPublicacion(publicacion));
             }
         }
 
@@ -70,7 +71,7 @@ public class ReaccionController {
 
         Reaccion reaccionSave = reaccionRepository.save(reaccion);
 
-        return ResponseEntity.ok(reaccionSave);
+        return ResponseEntity.ok(reaccionRepository.findByPublicacion(publicacion));
     }
 
 
