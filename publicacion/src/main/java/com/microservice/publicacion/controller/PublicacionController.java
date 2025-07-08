@@ -124,6 +124,12 @@ public ResponseEntity<?> findAll( @RequestHeader(HttpHeaders.AUTHORIZATION)
      return ResponseEntity.ok(publicacionDtoList);
 }
 
+@GetMapping("/size")
+public ResponseEntity<?> sizePage(){
+    final Pageable pageable = PageRequest.of(0,3);
+     return ResponseEntity.ok( publicacionRepository.findAll(pageable).getTotalPages());
+}
+
     @GetMapping("/public/all/{pagina}")
     public ResponseEntity<?> paginacion(@PathVariable int pagina){
         final Pageable pageable = PageRequest.of(pagina,3);
