@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -127,7 +128,10 @@ public ResponseEntity<?> findAll( @RequestHeader(HttpHeaders.AUTHORIZATION)
 @GetMapping("/size")
 public ResponseEntity<?> sizePage(){
     final Pageable pageable = PageRequest.of(0,3);
-     return ResponseEntity.ok( publicacionRepository.findAll(pageable).getTotalPages());
+
+    Integer totalPages = publicacionRepository.findAll(pageable).getTotalPages();
+
+     return ResponseEntity.ok(Map.of("totalPages", totalPages));
 }
 
     @GetMapping("/public/all/{pagina}")
