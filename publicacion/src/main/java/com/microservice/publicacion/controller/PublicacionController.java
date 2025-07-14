@@ -7,6 +7,7 @@ import com.microservice.publicacion.dto.PublicacionDto;
 import com.microservice.publicacion.entity.Publicacion;
 import com.microservice.publicacion.entity.Reaccion;
 import com.microservice.publicacion.repository.PublicacionRepository;
+import com.microservice.publicacion.repository.ReaccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,9 @@ public class PublicacionController {
  private ComentarioClient comentarioClient;
 
  @Autowired
+ private ReaccionRepository reaccionRepository;
+
+ @Autowired
  KafkaTemplate<String, String> kafkaTemplate;
 
 
@@ -56,7 +60,29 @@ public class PublicacionController {
                      .build()
      );
 
-     return ResponseEntity.ok(publicacion);
+     List<Reaccion> reaccionList = reaccionRepository.findByPublicacion(publicacion);
+     publicacion.setReaccionList(reaccionList);
+
+     Publicacion publicacion2 = publicacionRepository.save(publicacion);
+
+     boolean haveYourReaction = false;
+     for (Reaccion r : publicacion2.getReaccionList()){
+         if (r.getUserId().equals(auth.getUserId().longValue())){
+             haveYourReaction = true;
+             break;
+         }
+     }
+
+     return ResponseEntity.ok(
+             PublicacionDto.builder()
+             .id(publicacion2.getId())
+             .text(publicacion2.getText())
+             .userId(publicacion2.getUserId())
+             .reaccionList(publicacion2.getReaccionList())
+             .haveYourReaction(haveYourReaction)
+             .sizeComentario(comentarioClient.sizeComentario(publicacion2.getId()))
+             .build()
+     );
  }
 
  @DeleteMapping("/delete")
