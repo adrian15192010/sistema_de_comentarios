@@ -5,8 +5,10 @@ import com.microservice.comentario.client.PublicacionClient;
 import com.microservice.comentario.dto.AuthenticationTokenResponse;
 import com.microservice.comentario.dto.ComentarioDto;
 import com.microservice.comentario.entity.Comentario;
+import com.microservice.comentario.entity.Reaccion;
 import com.microservice.comentario.entity.Respuesta;
 import com.microservice.comentario.repository.ComentarioRepository;
+import com.microservice.comentario.repository.ReaccionRepository;
 import com.microservice.comentario.repository.RespuestaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +31,9 @@ public class ComentarioController {
 
     @Autowired
     private RespuestaRepository respuestaRepository;
+
+    @Autowired
+    private ReaccionRepository reaccionRepository;
 
     @Autowired
     private AuthClient authClient;
@@ -55,8 +60,21 @@ public class ComentarioController {
                         .build()
         );
 
+        List<Respuesta> respuestaList = respuestaRepository.findByComentario(comentario);
+        List<Reaccion> reaccionList = reaccionRepository.findByComentario(comentario);
 
-        return ResponseEntity.ok(comentario);
+        return ResponseEntity.ok(
+                ComentarioDto.builder()
+                        .id(comentario.getId())
+                        .text(comentario.getText())
+                        .userId(comentario.getUserId())
+                        .username(comentario.getUsername())
+                        .publicacionId(comentario.getPublicacionId())
+                        .respuestaList(respuestaList)
+                        .reaccionList(reaccionList)
+                        .build()
+
+        );
     }
 
     @GetMapping("/all/{publicacionId}")
