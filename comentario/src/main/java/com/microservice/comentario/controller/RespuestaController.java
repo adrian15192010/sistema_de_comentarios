@@ -82,7 +82,7 @@ public class RespuestaController {
 
             Respuesta respuestaToRespuesta = respuestaRepository.save(
                     Respuesta.builder()
-                            .text(respuestaDto.getText())
+                            .text("@"+respuesta.getUsername()+" "+respuestaDto.getText())
                             .userId(auth.getUserId().longValue())
                             .username(auth.getEmail())
                             .publicacionId(respuesta.getPublicacionId())
