@@ -18,6 +18,8 @@ public class PublicacionDto {
 
     private Long userId;
 
+    private String username;
+
     private List<Reaccion> reaccionList;
 
     private boolean haveYourReaction;

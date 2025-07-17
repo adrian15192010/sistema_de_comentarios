@@ -78,6 +78,7 @@ public class PublicacionController {
              .id(publicacion2.getId())
              .text(publicacion2.getText())
              .userId(publicacion2.getUserId())
+             .username(auth.getEmail())
              .reaccionList(publicacion2.getReaccionList())
              .haveYourReaction(haveYourReaction)
              .sizeComentario(comentarioClient.sizeComentario(publicacion2.getId()))
