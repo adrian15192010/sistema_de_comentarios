@@ -4,9 +4,12 @@ import com.microservice.comentario.client.AuthClient;
 import com.microservice.comentario.dto.AuthenticationTokenResponse;
 import com.microservice.comentario.dto.ComentarioDto;
 import com.microservice.comentario.dto.RespuestaDto;
+import com.microservice.comentario.dto.RespuestaDtoCompleted;
 import com.microservice.comentario.entity.Comentario;
+import com.microservice.comentario.entity.Reaccion;
 import com.microservice.comentario.entity.Respuesta;
 import com.microservice.comentario.repository.ComentarioRepository;
+import com.microservice.comentario.repository.ReaccionRepository;
 import com.microservice.comentario.repository.RespuestaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/respuesta")
 public class RespuestaController {
@@ -28,6 +33,9 @@ public class RespuestaController {
 
     @Autowired
     private ComentarioRepository comentarioRepository;
+
+    @Autowired
+    private ReaccionRepository reaccionRepository;
 
 
     @PostMapping("/comentario/create/{id_comentario}")
@@ -59,8 +67,21 @@ public class RespuestaController {
                         .build()
         );
 
+        List<Respuesta> respuestaList = respuestaRepository.findByRespuesta(respuesta);
+        List<Reaccion> reaccionList = reaccionRepository.findByRespuesta(respuesta);
 
-        return ResponseEntity.ok(respuesta);
+
+        return ResponseEntity.ok(
+                RespuestaDtoCompleted.builder()
+                        .id(respuesta.getId())
+                        .text(respuesta.getText())
+                        .userId(respuesta.getUserId())
+                        .username(respuesta.getUsername())
+                        .publicacionId(respuesta.getPublicacionId())
+                        .respuestaList(respuestaList)
+                        .reaccionList(reaccionList)
+                        .build()
+        );
     }
 
     @PostMapping("/respuesta/create/{id_respuesta}")
@@ -92,7 +113,21 @@ public class RespuestaController {
                             .build()
             );
 
-        return ResponseEntity.ok(respuestaToRespuesta);
+        List<Respuesta> respuestaList = respuestaRepository.findByRespuesta(respuestaToRespuesta);
+        List<Reaccion> reaccionList = reaccionRepository.findByRespuesta(respuestaToRespuesta);
+
+
+        return ResponseEntity.ok(
+                RespuestaDtoCompleted.builder()
+                        .id(respuestaToRespuesta.getId())
+                        .text(respuestaToRespuesta.getText())
+                        .userId(respuestaToRespuesta.getUserId())
+                        .username(respuestaToRespuesta.getUsername())
+                        .publicacionId(respuestaToRespuesta.getPublicacionId())
+                        .respuestaList(respuestaList)
+                        .reaccionList(reaccionList)
+                        .build()
+        );
     }
 
     @GetMapping("/comentario/respuestas")
