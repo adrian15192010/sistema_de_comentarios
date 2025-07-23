@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -44,8 +46,8 @@ public class AuthController {
     }
 
     @GetMapping("/log-out")
-    public ResponseEntity<String> log_out(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authentication){
-           return ResponseEntity.ok(service.log_out(authentication));
+    public ResponseEntity<Map> log_out(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authentication){
+           return ResponseEntity.ok(Map.of("sesion", service.log_out(authentication)));
     }
 
 
